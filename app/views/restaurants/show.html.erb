@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+            <nav class="navbar" style="background-color: #0a5ed7;">
+              <div class="text-light text-start fs-5 fw-medium ">
+                <img src="https://images.ctfassets.net/xz1dnu24egyd/3uj0WByKthyDWCOhCFTQIw/abf94946627aa6b5fc483149a56ba942/gitlab-logo-700.png" class=fa-fade width="45" height="40"><%= @restaurant.name %><img src="https://images.ctfassets.net/xz1dnu24egyd/3uj0WByKthyDWCOhCFTQIw/abf94946627aa6b5fc483149a56ba942/gitlab-logo-700.png" class=fa-fade width="45" height="40">
+              </div>
+            </nav>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th scope="row">Address</th>
+            <td><%= @restaurant.address %></td>
+          </tr>
+          <tr>
+            <th scope="row">Phone Number</th>
+            <td><%= @restaurant.phone_number %></td>
+          </tr>
+          <tr>
+            <th scope="row">Category</th>
+            <td><%= @restaurant.category %></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="list-group">
+        <% @restaurant.reviews.each do |review| %>
+          <li class="list-group-item">
+            <small>
+              <% count = 0 %>
+              <% 5.times do %>
+                <% if review.rating > count %>
+                  <i class="fa-solid fa-star"></i>
+                <% else %>
+                  <i class="fa-regular fa-star"></i>
+                <% end %>
+                <% count += 1 %>
+              <% end %>
+            </small>
+            <p><%= review.content %></p>
+          </li>
+        <% end %>
+      </div>
+
+      <%= simple_form_for [@restaurant, @review] do |f| %>
+        <%= f.input :rating, collection: 0..5 %>
+        <%= f.input :content%>
+        <%= f.submit class: 'btn btn-primary' %>
+      <% end %><br>
+      <%= link_to "See all restaurants", restaurants_path,class:"btn btn-primary" %>
+    </div>
+  </div>
+</div>
